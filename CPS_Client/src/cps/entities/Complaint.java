@@ -12,32 +12,27 @@ import cps.entities.enums.ComplaintStatus;
 public class Complaint implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The complaint id. */
     private String complaintId;
     
-    /** The customer id. */
     private String customerId;
     
-    /** The filling date time. */
     private LocalDateTime fillingDateTime;
     
-    /** The complaint details. */
     private String complaintDetails;
     
-    /** The status. */
     private ComplaintStatus status;
     
-    /** The compensation. */
     private float compensation;
     
     /**
      * Instantiates a new complaint.
      *
-     * @param customerId the customer id
-     * @param complaintDetails the complaint details
+     * @param customerId
+     *            the customer id
+     * @param complaintDetails
+     *            the complaint details
      */
     public Complaint(String customerId, String complaintDetails)
     {
@@ -56,12 +51,18 @@ public class Complaint implements Serializable
     /**
      * Instantiates a new complaint.
      *
-     * @param complaintId the complaint id
-     * @param customerId the customer id
-     * @param fillingDateTime the filling date time
-     * @param complaintDetails the complaint details
-     * @param status the status
-     * @param compensation the compensation
+     * @param complaintId
+     *            the complaint id
+     * @param customerId
+     *            the customer id
+     * @param fillingDateTime
+     *            the filling date time
+     * @param complaintDetails
+     *            the complaint details
+     * @param status
+     *            the status
+     * @param compensation
+     *            the compensation
      */
     public Complaint(String complaintId, String customerId, LocalDateTime fillingDateTime, String complaintDetails,
 	    ComplaintStatus status, float compensation)
@@ -74,7 +75,9 @@ public class Complaint implements Serializable
 	this.compensation = compensation;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -88,7 +91,8 @@ public class Complaint implements Serializable
     /**
      * Sets the compensation.
      *
-     * @param compensation the new compensation
+     * @param compensation
+     *            the new compensation
      */
     public void setCompensation(float compensation)
     {
@@ -98,7 +102,8 @@ public class Complaint implements Serializable
     /**
      * Sets the complaint id.
      *
-     * @param complaintId the new complaint id
+     * @param complaintId
+     *            the new complaint id
      */
     public void setComplaintId(String complaintId)
     {
@@ -108,7 +113,8 @@ public class Complaint implements Serializable
     /**
      * Sets the status.
      *
-     * @param status the new status
+     * @param status
+     *            the new status
      */
     public void setStatus(ComplaintStatus status)
     {

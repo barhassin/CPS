@@ -27,61 +27,47 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 
-// TODO: Auto-generated Javadoc
+// TODO: Auto-generated Javadoc 
 /**
  * The Class PartialMembershipRegisterController.
  */
 public class PartialMembershipRegisterController extends BaseController
 {
     
-    /** The car number. */
     @FXML
     private TextField carNumber;
     
-    /** The parking lot. */
     @FXML
     private MenuButton parkingLot;
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The exit hour. */
     @FXML
     private TextField exitHour;
     
-    /** The car list view. */
     @FXML
     private ListView<String> carListView;
     
-    /** The id. */
     @FXML
     private TextField id;
     
-    /** The starting date picker. */
     @FXML
     private DatePicker startingDatePicker;
     
-    /** The email. */
     @FXML
     private TextField email;
     
-    /** The partial membership. */
     private PartialMembership partialMembership;
     
-    /** The customer. */
     private Customer customer;
     
-    /** The parking lot. */
     private String parking_Lot;
     
-    /** The cars. */
     private ObservableList<String> cars = FXCollections.observableArrayList();
     
-    /** The parkinglist. */
     private ArrayList<Parkinglot> parkinglist = new ArrayList<Parkinglot>();
     
-    /** The car list. */
     private ArrayList<String> carList = new ArrayList<String>();
     
     /**
@@ -93,7 +79,7 @@ public class PartialMembershipRegisterController extends BaseController
 	carListView.setEditable(true);
 	startingDatePicker.setEditable(true);
 	startingDatePicker.setValue(LocalDate.now());
-	ServerResponse<ArrayList<Parkinglot>> initListParkinglot = RequestsSender.GetAllParkinglots();
+	ServerResponse<ArrayList<Parkinglot>> initListParkinglot = RequestsSender.GetAllParkinglots(false);
 	if (initListParkinglot.GetRequestResult().equals(RequestResult.Failed))
 	{
 	    DialogBuilder.AlertDialog(AlertType.ERROR, null, Consts.ServerProblemMessage, null, false);
@@ -116,9 +102,10 @@ public class PartialMembershipRegisterController extends BaseController
     }
     
     /**
-     * On back.
+     * Client clicks on back button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnBack(ActionEvent event)
@@ -131,9 +118,10 @@ public class PartialMembershipRegisterController extends BaseController
     }
     
     /**
-     * On submit and pay.
+     * Client clicks on submit and pay button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnSubmitAndPay(ActionEvent event)
@@ -158,6 +146,13 @@ public class PartialMembershipRegisterController extends BaseController
 			|| AddCustomerIfNotExist.GetRequestResult().equals(RequestResult.Failed))
 		{
 		    DialogBuilder.AlertDialog(AlertType.ERROR, null, Consts.ServerProblemMessage, null, false);
+		    
+		    return;
+		}
+		
+		if (registerPartialMembershipResponse.GetRequestResult().equals(RequestResult.AlredyExist))
+		{
+		    DialogBuilder.AlertDialog(AlertType.ERROR, null, "One of your cars is already registered to this parking lot.", null, false);
 		    
 		    return;
 		}
@@ -207,9 +202,10 @@ public class PartialMembershipRegisterController extends BaseController
     }
     
     /**
-     * On add car.
+     * Client clicks on add car button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnAddCar(ActionEvent event)
@@ -224,9 +220,10 @@ public class PartialMembershipRegisterController extends BaseController
     }
     
     /**
-     * On remove selected.
+     * Client clicks on remove selected button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnRemoveSelected(ActionEvent event)
@@ -251,7 +248,7 @@ public class PartialMembershipRegisterController extends BaseController
     }
     
     /**
-     * Amount to pay.
+     * Sets the payment amount.
      *
      * @return the float
      */

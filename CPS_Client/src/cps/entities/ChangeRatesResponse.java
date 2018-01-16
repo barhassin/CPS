@@ -9,20 +9,19 @@ import java.io.Serializable;
 public class ChangeRatesResponse implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The request id. */
     private String requestId;
     
-    /** The is approved. */
     private boolean isApproved;
     
     /**
      * Instantiates a new change rates response.
      *
-     * @param requestId the request id
-     * @param isApproved the is approved
+     * @param requestId
+     *            the request id
+     * @param isApproved
+     *            the is approved
      */
     public ChangeRatesResponse(String requestId, boolean isApproved)
     {
@@ -30,7 +29,9 @@ public class ChangeRatesResponse implements Serializable
 	this.isApproved = isApproved;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

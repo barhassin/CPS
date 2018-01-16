@@ -10,32 +10,31 @@ import java.time.LocalDateTime;
 public class AddRealTimeParkingRequest implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The parkinglot. */
     private String parkinglot;
     
-    /** The start date time. */
     private LocalDateTime startDateTime;
     
-    /** The exi date time. */
     private LocalDateTime exiDateTime;
     
-    /** The car number. */
     private String carNumber;
     
-    /** The is guest request. */
     private boolean isGuestRequest;
     
     /**
      * Instantiates a new adds the real time parking request.
      *
-     * @param parkinglot the parkinglot
-     * @param startDateTime the start date time
-     * @param exiDateTime the exi date time
-     * @param carNumber the car number
-     * @param isGuestRequest the is guest request
+     * @param parkinglot
+     *            the parkinglot
+     * @param startDateTime
+     *            the start date time
+     * @param exiDateTime
+     *            the exi date time
+     * @param carNumber
+     *            the car number
+     * @param isGuestRequest
+     *            the is guest request
      */
     public AddRealTimeParkingRequest(String parkinglot, LocalDateTime startDateTime, LocalDateTime exiDateTime,
 	    String carNumber, boolean isGuestRequest)
@@ -47,7 +46,9 @@ public class AddRealTimeParkingRequest implements Serializable
 	this.isGuestRequest = isGuestRequest;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

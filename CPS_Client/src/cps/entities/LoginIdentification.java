@@ -9,20 +9,19 @@ import java.io.Serializable;
 public class LoginIdentification implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The Username. */
     private String Username;
     
-    /** The Password. */
     private String Password;
     
     /**
      * Instantiates a new login identification.
      *
-     * @param _Username the username
-     * @param _Password the password
+     * @param _Username
+     *            the username
+     * @param _Password
+     *            the password
      */
     public LoginIdentification(String _Username, String _Password)
     {
@@ -50,7 +49,9 @@ public class LoginIdentification implements Serializable
 	return Password;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

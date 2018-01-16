@@ -32,29 +32,22 @@ import javafx.scene.control.ProgressBar;
 public class ManageComplaintsController extends EmployeeBaseController
 {
     
-    /** The my complaints. */
     ArrayList<Complaint> myComplaints;
     
-    /** The my buttons. */
     ArrayList<String> myButtons = new ArrayList<String>();
     
-    /** The Compensate. */
     private ArrayList<String> Compensate = new ArrayList<>();
     
-    /** The current complaint id. */
     private String currentComplaintId = null;
     
-    /** The complaints list. */
     @FXML
     private ListView<String> complaintsList;
     
-    /** The prg bar. */
     @FXML
     private ProgressBar prgBar;
     
     /**
-     * On back.
-     *
+     * Sets the Previews scene
      * @param event the event
      */
     @FXML
@@ -70,8 +63,8 @@ public class ManageComplaintsController extends EmployeeBaseController
     }
     
     /**
-     * On handle complaint.
-     *
+     * This function helps the customer service employee handle complaints.  
+     * The employee selects a complaint by complaint id and decides whether to compensate the customer or not.
      * @param event the event
      */
     @FXML
@@ -142,8 +135,8 @@ public class ManageComplaintsController extends EmployeeBaseController
     }
     
     /**
-     * On load.
-     *
+     * This function loads unhandled complaints from the Data Base into a list.
+     * The complaints are displayed by their complaint-id.
      * @param event the event
      */
     @FXML

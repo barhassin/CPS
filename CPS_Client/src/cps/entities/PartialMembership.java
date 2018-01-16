@@ -11,27 +11,29 @@ import java.util.ArrayList;
 public class PartialMembership extends MembershipBase
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The parkinglot. */
     private String parkinglot;
     
-    /** The car list. */
     private ArrayList<String> carList;
     
-    /** The exit time. */
     private LocalTime exitTime;
     
     /**
      * Instantiates a new partial membership.
      *
-     * @param id the id
-     * @param startingDate the starting date
-     * @param endingDate the ending date
-     * @param parkinglot the parkinglot
-     * @param carList the car list
-     * @param exitTime the exit time
+     * @param id
+     *            the id
+     * @param startingDate
+     *            the starting date
+     * @param endingDate
+     *            the ending date
+     * @param parkinglot
+     *            the parkinglot
+     * @param carList
+     *            the car list
+     * @param exitTime
+     *            the exit time
      */
     public PartialMembership(String id, LocalDate startingDate, LocalDate endingDate, String parkinglot,
 	    ArrayList<String> carList, LocalTime exitTime)
@@ -44,7 +46,7 @@ public class PartialMembership extends MembershipBase
     }
     
     /**
-     * Gets the parkinglot.
+     * Gets the parking lot.
      *
      * @return the string
      */
@@ -73,14 +75,16 @@ public class PartialMembership extends MembershipBase
 	return exitTime;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see cps.entities.MembershipBase#toString()
      */
     @Override
     public String toString()
     {
-	return "Partial Membership: \n\n"+super.toString() + "Parkinglot: " + parkinglot + "\nExit time: "
-		+ exitTime + "\n" +"Cars: "+ CarListString();
+	return "Partial Membership: \n\n" + super.toString() + "Parkinglot: " + parkinglot + "\nExit time: " + exitTime
+		+ "\n" + "Cars: " + CarListString();
     }
     
     /**

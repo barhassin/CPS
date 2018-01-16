@@ -35,20 +35,15 @@ import javafx.scene.control.Alert.AlertType;
 public class KioskExitController extends BaseController
 {
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The Pre order inputs. */
     private ArrayList<String> PreOrderInputs = new ArrayList<>();
     
-    /** The Member inputs. */
     private ArrayList<String> MemberInputs = new ArrayList<>();
     
-    /** The parkinglot name. */
     private String parkinglotName;
     
-    /** The parkinglot. */
     private Parkinglot parkinglot;
     
     /**
@@ -129,7 +124,7 @@ public class KioskExitController extends BaseController
     }
     
     /**
-     * On guest exit.
+     * Client clicks on guest exit button.
      *
      * @param event the event
      */
@@ -210,7 +205,7 @@ public class KioskExitController extends BaseController
     }
     
     /**
-     * On back.
+     * Client clicks on back button .
      *
      * @param event the event
      */

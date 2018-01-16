@@ -2,29 +2,10 @@ package cps.clientServer;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Enum RequestResult.
+ * The Enum RequestResult. Each ServerResponse has a RequestResult with the
+ * appropriate result.
  */
 public enum RequestResult
 {
-    
-    /** The None. */
-    None,
-    
-    /** The Succeed. */
-    Succeed,
-    
-    /** The Failed. */
-    Failed,
-    
-    /** The Not found. */
-    NotFound,
-    
-    /** The Alredy exist. */
-    AlredyExist,
-    
-    /** The Wrong credentials. */
-    WrongCredentials,
-    
-    /** The Resource not availlable. */
-    ResourceNotAvaillable
+    None, Succeed, Failed, NotFound, AlredyExist, WrongCredentials, ResourceNotAvaillable
 }

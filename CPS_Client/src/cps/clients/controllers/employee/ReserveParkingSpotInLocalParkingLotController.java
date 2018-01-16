@@ -29,42 +29,32 @@ import javafx.scene.control.TextField;
 public class ReserveParkingSpotInLocalParkingLotController extends EmployeeBaseController
 {
     
-    /** The car number. */
     @FXML // fx:id="carNumber"
     private TextField carNumber; // Value injected by FXMLLoader
     
-    /** The arrival hour. */
     @FXML // fx:id="arrivalHour"
     private TextField arrivalHour; // Value injected by FXMLLoader
     
-    /** The leaving hour. */
     @FXML // fx:id="leavingHour"
     private TextField leavingHour; // Value injected by FXMLLoader
     
-    /** The customer id. */
     @FXML // fx:id="customerId"
     private TextField customerId; // Value injected by FXMLLoader
     
-    /** The email. */
     @FXML // fx:id="email"
     private TextField email; // Value injected by FXMLLoader
     
-    /** The arrival date. */
     @FXML // fx:id="arrivalDate"
     private DatePicker arrivalDate; // Value injected by FXMLLoader
     
-    /** The leaving date. */
     @FXML // fx:id="leavingDate"
     private DatePicker leavingDate; // Value injected by FXMLLoader
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The reservation. */
     Reservation reservation;
     
-    /** The customer. */
     Customer customer;
     
     /**
@@ -81,7 +71,7 @@ public class ReserveParkingSpotInLocalParkingLotController extends EmployeeBaseC
     
     /**
      * On submit.
-     *
+     *Sends the reservation to the DB
      * @param event the event
      */
     @FXML
@@ -109,7 +99,7 @@ public class ReserveParkingSpotInLocalParkingLotController extends EmployeeBaseC
     
     /**
      * On back.
-     *
+     *Sets the Previews scene
      * @param event the event
      */
     @FXML

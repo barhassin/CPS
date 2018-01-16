@@ -26,33 +26,25 @@ import javafx.scene.control.TextField;
 public class FullMembershipRegisterController extends BaseController
 {
     
-    /** The starting date picker. */
     @FXML
     private DatePicker startingDatePicker;
     
-    /** The car number. */
     @FXML
     private TextField carNumber;
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The id. */
     @FXML
     private TextField id;
     
-    /** The email. */
     @FXML
     private TextField email;
     
-    /** The full membership. */
     FullMembership fullMembership;
     
-    /** The customer. */
     Customer customer;
     
-    /** The rate. */
     private final int rate = 5;
     
     /**
@@ -66,9 +58,10 @@ public class FullMembershipRegisterController extends BaseController
     }
     
     /**
-     * On back.
+     * Client clicks on back button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnBack(ActionEvent event)
@@ -78,9 +71,10 @@ public class FullMembershipRegisterController extends BaseController
     }
     
     /**
-     * On submit and pay.
+     * Client clicks on submit and pay button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnSubmitAndPay(ActionEvent event)
@@ -112,6 +106,13 @@ public class FullMembershipRegisterController extends BaseController
 			|| AddCustomerIfNotExist.GetRequestResult().equals(RequestResult.Failed))
 		{
 		    DialogBuilder.AlertDialog(AlertType.ERROR, null, Consts.ServerProblemMessage, null, false);
+		    
+		    return;
+		}
+		
+		if (registerFullMembershipResponse.GetRequestResult().equals(RequestResult.AlredyExist))
+		{
+		    DialogBuilder.AlertDialog(AlertType.ERROR, null, "We alreay have a full membership client signed with this car.", null, false);
 		    
 		    return;
 		}

@@ -2,7 +2,7 @@ package cps.utilities;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ConstsEmployees.
+ * The Class ConstsEmployees. Consts for the employee's controllers.
  */
 public class ConstsEmployees {
 	 

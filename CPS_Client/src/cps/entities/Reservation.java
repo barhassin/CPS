@@ -14,55 +14,53 @@ import cps.entities.enums.ReservationType;
 public class Reservation implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The order id. */
     private String orderId;
     
-    /** The customer id. */
     private String customerId;
     
-    /** The parking lot. */
     private String parkingLot;
     
-    /** The car number. */
     private String carNumber;
     
-    /** The arrival date. */
     private LocalDate arrivalDate;
     
-    /** The leaving date. */
     private LocalDate leavingDate;
     
-    /** The arrival hour. */
     private LocalTime arrivalHour;
     
-    /** The leaving hour. */
     private LocalTime leavingHour;
     
-    /** The reservation type. */
     private ReservationType reservationType;
     
-    /** The reservation status. */
     private ReservationStatus reservationStatus;
     
-    /** The price. */
     private float price;
     
     /**
      * Instantiates a new reservation.
      *
-     * @param reservationType the reservation type
-     * @param customerId the customer id
-     * @param parkinglot the parkinglot
-     * @param carNumber the car number
-     * @param arrivalDate the arrival date
-     * @param leavingDate the leaving date
-     * @param arrivalHour the arrival hour
-     * @param leavingHour the leaving hour
-     * @param reservationStatus the reservation status
-     * @param price the price
+     * @param reservationType
+     *            the reservation type
+     * @param customerId
+     *            the customer id
+     * @param parkinglot
+     *            the parkinglot
+     * @param carNumber
+     *            the car number
+     * @param arrivalDate
+     *            the arrival date
+     * @param leavingDate
+     *            the leaving date
+     * @param arrivalHour
+     *            the arrival hour
+     * @param leavingHour
+     *            the leaving hour
+     * @param reservationStatus
+     *            the reservation status
+     * @param price
+     *            the price
      */
     public Reservation(ReservationType reservationType, String customerId, String parkinglot, String carNumber,
 	    LocalDate arrivalDate, LocalDate leavingDate, LocalTime arrivalHour, LocalTime leavingHour,
@@ -82,7 +80,9 @@ public class Reservation implements Serializable
 	this.price = price;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     public String toString()
@@ -216,7 +216,8 @@ public class Reservation implements Serializable
     /**
      * Sets the order id.
      *
-     * @param orderId the new order id
+     * @param orderId
+     *            the new order id
      */
     public void setOrderId(String orderId)
     {

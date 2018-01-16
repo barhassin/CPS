@@ -11,13 +11,12 @@ import javafx.scene.control.Label;
  */
 public class CustomerServiceEnteryController  extends EmployeeBaseController{
 
-	/** The Headline. */
 	@FXML
     private Label Headline;
 	
     /**
      * On manage complaints.
-     *
+     *Set the scene where Customer service employee can manage the complaints 
      * @param event the event
      */
     @FXML
@@ -28,7 +27,7 @@ public class CustomerServiceEnteryController  extends EmployeeBaseController{
 
     /**
      * On save parking spot.
-     *
+     *Set the scene where Customer service employee reserve a parking spot 
      * @param event the event
      */
     @FXML
@@ -40,7 +39,7 @@ public class CustomerServiceEnteryController  extends EmployeeBaseController{
     
     /**
      * On back.
-     *
+     *Sets the Previews scene
      * @param event the event
      */
     @FXML
@@ -53,7 +52,7 @@ public class CustomerServiceEnteryController  extends EmployeeBaseController{
     
     /**
      * On manage customer.
-     *
+     *Set the scene where Customer service employee can do some changes in the customer account
      * @param event the event
      */
     @FXML

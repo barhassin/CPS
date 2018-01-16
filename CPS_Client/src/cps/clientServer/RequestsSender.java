@@ -39,19 +39,21 @@ import javafx.scene.control.Dialog;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class RequestsSender.
+ * The Class RequestsSender. This is the API that the clients can use to speak
+ * with the server.
  */
 public class RequestsSender
 {
     
-    /** The server IP. */
     private static String serverIP;
     
     /**
-     * Instantiates a new requests sender.
+     * Instantiates a new requests sender with ip from the GUI.
      *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws URISyntaxException the URI syntax exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws URISyntaxException
+     *             the URI syntax exception
      */
     public RequestsSender() throws IOException, URISyntaxException
     {
@@ -77,23 +79,16 @@ public class RequestsSender
     }
     
     /**
-     * Instantiates a new requests sender.
+     * Instantiates a new requests sender for E2E tests.
      *
-     * @param ip the ip
+     * @param ip
+     *            the ip
      */
     public RequestsSender(String ip)
     {
 	serverIP = ip;
     }
     
-    /**
-     * Send request.
-     *
-     * @param <T> the generic type
-     * @param sentObject the sent object
-     * @param serverDestination the server destination
-     * @return the server response
-     */
     @SuppressWarnings("unchecked")
     private static <T> ServerResponse<T> SendRequest(Object sentObject, String serverDestination)
     {
@@ -101,7 +96,7 @@ public class RequestsSender
 		ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream()))
 	{
-	    	    
+	    
 	    ClientRequest clientRequest = new ClientRequest(sentObject, serverDestination);
 	    
 	    outputStream.writeObject(clientRequest);
@@ -121,7 +116,8 @@ public class RequestsSender
     /**
      * Register full membership.
      *
-     * @param fullMembership the full membership
+     * @param fullMembership
+     *            the full membership
      * @return the server response
      */
     public static ServerResponse<FullMembership> RegisterFullMembership(FullMembership fullMembership)
@@ -132,7 +128,8 @@ public class RequestsSender
     /**
      * Register partial membership.
      *
-     * @param partialMembership the partial membership
+     * @param partialMembership
+     *            the partial membership
      * @return the server response
      */
     public static ServerResponse<PartialMembership> RegisterPartialMembership(PartialMembership partialMembership)
@@ -143,7 +140,8 @@ public class RequestsSender
     /**
      * Adds the customer if not exists.
      *
-     * @param customer the customer
+     * @param customer
+     *            the customer
      * @return the server response
      */
     public static ServerResponse<Customer> AddCustomerIfNotExists(Customer customer)
@@ -154,7 +152,8 @@ public class RequestsSender
     /**
      * Gets the full membership.
      *
-     * @param subscriptionId the subscription id
+     * @param subscriptionId
+     *            the subscription id
      * @return the server response
      */
     public static ServerResponse<FullMembership> GetFullMembership(String subscriptionId)
@@ -165,7 +164,8 @@ public class RequestsSender
     /**
      * Gets the partial membership.
      *
-     * @param subscriptionId the subscription id
+     * @param subscriptionId
+     *            the subscription id
      * @return the server response
      */
     public static ServerResponse<PartialMembership> GetPartialMembership(String subscriptionId)
@@ -176,7 +176,8 @@ public class RequestsSender
     /**
      * Gets the customer.
      *
-     * @param customerId the customer id
+     * @param customerId
+     *            the customer id
      * @return the server response
      */
     public static ServerResponse<Customer> GetCustomer(String customerId)
@@ -185,9 +186,10 @@ public class RequestsSender
     }
     
     /**
-     * Reservation.
+     * Puts Reservation.
      *
-     * @param reservation the reservation
+     * @param reservation
+     *            the reservation
      * @return the server response
      */
     public static ServerResponse<Reservation> Reservation(Reservation reservation)
@@ -198,7 +200,8 @@ public class RequestsSender
     /**
      * Gets the reservation.
      *
-     * @param orderId the order id
+     * @param orderId
+     *            the order id
      * @return the server response
      */
     public static ServerResponse<Reservation> GetReservation(String orderId)
@@ -209,7 +212,8 @@ public class RequestsSender
     /**
      * Gets the employee.
      *
-     * @param loginIdentification the login identification
+     * @param loginIdentification
+     *            the login identification
      * @return the server response
      */
     public static ServerResponse<Employee> GetEmployee(LoginIdentification loginIdentification)
@@ -220,7 +224,8 @@ public class RequestsSender
     /**
      * Adds the parkinglot.
      *
-     * @param parkinglot the parkinglot
+     * @param parkinglot
+     *            the parkinglot
      * @return the server response
      */
     public static ServerResponse<Parkinglot> AddParkinglot(Parkinglot parkinglot)
@@ -233,15 +238,16 @@ public class RequestsSender
      *
      * @return the server response
      */
-    public static ServerResponse<ArrayList<Parkinglot>> GetAllParkinglots()
+    public static ServerResponse<ArrayList<Parkinglot>> GetAllParkinglots(boolean onlyNotFull)
     {
-	return SendRequest(null, ClientServerConsts.GetAllParkinglots);
+	return SendRequest(onlyNotFull, ClientServerConsts.GetAllParkinglots);
     }
     
     /**
      * Gets the parkinglot.
      *
-     * @param parkinglotName the parkinglot name
+     * @param parkinglotName
+     *            the parkinglot name
      * @return the server response
      */
     public static ServerResponse<Parkinglot> GetParkinglot(String parkinglotName)
@@ -252,7 +258,8 @@ public class RequestsSender
     /**
      * Change parkinglot status.
      *
-     * @param changeParkinglotStatusRequest the change parkinglot status request
+     * @param changeParkinglotStatusRequest
+     *            the change parkinglot status request
      * @return the server response
      */
     public static ServerResponse<ChangeParkinglotStatusRequest> ChangeParkinglotStatus(
@@ -262,9 +269,10 @@ public class RequestsSender
     }
     
     /**
-     * Adds the complaint.
+     * Adds a complaint.
      *
-     * @param complaint the complaint
+     * @param complaint
+     *            the complaint
      * @return the server response
      */
     public static ServerResponse<Complaint> AddComplaint(Complaint complaint)
@@ -273,7 +281,7 @@ public class RequestsSender
     }
     
     /**
-     * Gets the all active complaints.
+     * Gets all active complaints.
      *
      * @return the server response
      */
@@ -285,7 +293,8 @@ public class RequestsSender
     /**
      * Close complaint.
      *
-     * @param closeComplaintRequest the close complaint request
+     * @param closeComplaintRequest
+     *            the close complaint request
      * @return the server response
      */
     public static ServerResponse<CloseComplaintRequest> CloseComplaint(CloseComplaintRequest closeComplaintRequest)
@@ -296,7 +305,8 @@ public class RequestsSender
     /**
      * Adds the change rates request.
      *
-     * @param changeRatesRequest the change rates request
+     * @param changeRatesRequest
+     *            the change rates request
      * @return the server response
      */
     public static ServerResponse<ChangeRatesRequest> AddChangeRatesRequest(ChangeRatesRequest changeRatesRequest)
@@ -307,7 +317,8 @@ public class RequestsSender
     /**
      * Close change rates request.
      *
-     * @param changeRatesResponse the change rates response
+     * @param changeRatesResponse
+     *            the change rates response
      * @return the server response
      */
     public static ServerResponse<ChangeRatesResponse> CloseChangeRatesRequest(ChangeRatesResponse changeRatesResponse)
@@ -328,7 +339,8 @@ public class RequestsSender
     /**
      * Change parking spot status.
      *
-     * @param changeParkingSpotStatusRequest the change parking spot status request
+     * @param changeParkingSpotStatusRequest
+     *            the change parking spot status request
      * @return the server response
      */
     public static ServerResponse<ChangeParkingSpotStatusRequest> ChangeParkingSpotStatus(
@@ -346,11 +358,12 @@ public class RequestsSender
     {
 	return SendRequest(null, ClientServerConsts.GetAllDisabledParkingSpots);
     }
-
+    
     /**
-     * Change expire full membership.
+     * Change expiration of  full membership.
      *
-     * @param fullMembership the full membership
+     * @param fullMembership
+     *            the full membership
      * @return the server response
      */
     public static ServerResponse<FullMembership> ChangeExpireFullMembership(FullMembership fullMembership)
@@ -359,9 +372,10 @@ public class RequestsSender
     }
     
     /**
-     * Change expire partial membership.
+     * Change expiration of partial membership.
      *
-     * @param partialMembership the partial membership
+     * @param partialMembership
+     *            the partial membership
      * @return the server response
      */
     public static ServerResponse<PartialMembership> ChangeExpirePartialMembership(PartialMembership partialMembership)
@@ -372,18 +386,21 @@ public class RequestsSender
     /**
      * Try insert car.
      *
-     * @param addRealTimeParkingRequest the add real time parking request
+     * @param addRealTimeParkingRequest
+     *            the add real time parking request
      * @return the server response
      */
-    public static ServerResponse<AddRealTimeParkingRequest> TryInsertCar(AddRealTimeParkingRequest addRealTimeParkingRequest)
+    public static ServerResponse<AddRealTimeParkingRequest> TryInsertCar(
+	    AddRealTimeParkingRequest addRealTimeParkingRequest)
     {
-    return SendRequest(addRealTimeParkingRequest, ClientServerConsts.TryInsertGuestCar);
+	return SendRequest(addRealTimeParkingRequest, ClientServerConsts.TryInsertGuestCar);
     }
     
     /**
      * Removes the car.
      *
-     * @param removeCarRequest the remove car request
+     * @param removeCarRequest
+     *            the remove car request
      * @return the server response
      */
     public static ServerResponse<RemoveCarRequest> RemoveCar(RemoveCarRequest removeCarRequest)
@@ -414,7 +431,8 @@ public class RequestsSender
     /**
      * Gets the reservation report.
      *
-     * @param parkinglotName the parkinglot name
+     * @param parkinglotName
+     *            the parkinglot name
      * @return the server response
      */
     public static ServerResponse<ReservationReport> GetReservationReport(String parkinglotName)
@@ -425,7 +443,8 @@ public class RequestsSender
     /**
      * Gets the disabled report.
      *
-     * @param parkinglotName the parkinglot name
+     * @param parkinglotName
+     *            the parkinglot name
      * @return the server response
      */
     public static ServerResponse<DisabledReport> GetDisabledReport(String parkinglotName)
@@ -436,7 +455,8 @@ public class RequestsSender
     /**
      * Gets the activity report.
      *
-     * @param localDate the local date
+     * @param localDate
+     *            the local date
      * @return the server response
      */
     public static ServerResponse<ActivityReport> GetActivityReport(LocalDate localDate)
@@ -457,7 +477,8 @@ public class RequestsSender
     /**
      * Login user.
      *
-     * @param username the username
+     * @param username
+     *            the username
      * @return the server response
      */
     public static ServerResponse<String> LoginUser(String username)
@@ -468,7 +489,8 @@ public class RequestsSender
     /**
      * Logout user.
      *
-     * @param username the username
+     * @param username
+     *            the username
      * @return the server response
      */
     public static ServerResponse<String> LogoutUser(String username)
@@ -479,7 +501,8 @@ public class RequestsSender
     /**
      * Close reservation.
      *
-     * @param reservationId the reservation id
+     * @param reservationId
+     *            the reservation id
      * @return the server response
      */
     public static ServerResponse<String> CloseReservation(String reservationId)
@@ -490,7 +513,8 @@ public class RequestsSender
     /**
      * Credit customer.
      *
-     * @param request the request
+     * @param request
+     *            the request
      * @return the server response
      */
     public static ServerResponse<CreditCustomerRequest> CreditCustomer(CreditCustomerRequest request)

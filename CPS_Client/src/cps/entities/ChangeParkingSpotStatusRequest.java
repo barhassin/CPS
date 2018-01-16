@@ -11,24 +11,23 @@ import cps.entities.enums.ParkingSpotStatus;
 public class ChangeParkingSpotStatusRequest implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The parking spot. */
     ParkingSpot parkingSpot;
     
-    /** The parkinglot name. */
     String parkinglotName;
     
-    /** The parking spot status. */
     ParkingSpotStatus parkingSpotStatus;
     
     /**
      * Instantiates a new change parking spot status request.
      *
-     * @param parkingSpot the parking spot
-     * @param parkinglotName the parkinglot name
-     * @param parkingSpotStatus the parking spot status
+     * @param parkingSpot
+     *            the parking spot
+     * @param parkinglotName
+     *            the parkinglot name
+     * @param parkingSpotStatus
+     *            the parking spot status
      */
     public ChangeParkingSpotStatusRequest(ParkingSpot parkingSpot, String parkinglotName,
 	    ParkingSpotStatus parkingSpotStatus)
@@ -38,7 +37,9 @@ public class ChangeParkingSpotStatusRequest implements Serializable
 	this.parkingSpotStatus = parkingSpotStatus;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

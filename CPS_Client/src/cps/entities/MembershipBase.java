@@ -10,27 +10,25 @@ import java.time.LocalDate;
 public abstract class MembershipBase implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The subscription id. */
     protected String subscriptionId;
-
-    /** The customer id. */
+    
     protected String customerId;
     
-    /** The start date. */
     protected LocalDate startDate;
     
-    /** The expiry date. */
     protected LocalDate expiryDate;
     
     /**
      * Instantiates a new membership base.
      *
-     * @param id the id
-     * @param startingDate the starting date
-     * @param endingDate the ending date
+     * @param id
+     *            the id
+     * @param startingDate
+     *            the starting date
+     * @param endingDate
+     *            the ending date
      */
     public MembershipBase(String id, LocalDate startingDate, LocalDate endingDate)
     {
@@ -41,13 +39,16 @@ public abstract class MembershipBase implements Serializable
 	subscriptionId = "Not yet initialized";
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-	return "subscriptionId: " + subscriptionId + "\nCustomer ID: " + customerId + "\nStart date: " + startDate + "\nExpiry date: " + expiryDate + "\n";
+	return "subscriptionId: " + subscriptionId + "\nCustomer ID: " + customerId + "\nStart date: " + startDate
+		+ "\nExpiry date: " + expiryDate + "\n";
     }
     
     /**
@@ -93,7 +94,8 @@ public abstract class MembershipBase implements Serializable
     /**
      * Sets the subscription id.
      *
-     * @param subscriptionId the subscription id
+     * @param subscriptionId
+     *            the subscription id
      */
     public void SetSubscriptionId(String subscriptionId)
     {

@@ -6,6 +6,7 @@ import java.time.LocalTime;
 // TODO: Auto-generated Javadoc
 /**
  * The Class CPS_Tracer.
+ * This class is used to print the server logs.
  */
 public class CPS_Tracer
 {

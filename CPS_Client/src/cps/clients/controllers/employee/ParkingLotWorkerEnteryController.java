@@ -30,10 +30,8 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
 	
-	/** The Initialize parking spot inputs. */
 	private ArrayList<String> InitializeParkingSpotInputs = new ArrayList<>();
 	
-	/** The Disable parking spot inputs. */
 	private ArrayList<String> DisableParkingSpotInputs = new ArrayList<>();
 	
 	/**
@@ -54,7 +52,7 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
     
     /**
      * On initialize parking lot.
-     *
+     * Adds new parking lot to the DB and sets its sizes by the given inputs.
      * @param event the event
      */
     @FXML
@@ -84,8 +82,8 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
     }
 
     /**
-     * On register disabeled parking lot.
-     *
+     * On register disabled parking lot.
+     *Registers this parking lot as disabled in to the DB .
      * @param event the event
      */
     @FXML
@@ -120,7 +118,7 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
 
     /**
      * On reserve parking spot.
-     *
+     *Reserves parking spot in the DB by the given inputs .
      * @param event the event
      */
     @FXML
@@ -131,7 +129,7 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
 
     /**
      * On register disabeled parking spot.
-     *
+     *Disable parking spot in the DB by the given inputs .
      * @param event the event
      */
     @FXML
@@ -170,8 +168,8 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
     }
     
     /**
-     * On undisable parking lot.
-     *
+     * On enable parking lot.
+     *Registers this parking lot as enabled in the DB
      * @param event the event
      */
     @FXML
@@ -205,8 +203,8 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
     }
     
     /**
-     * On undisable parking spot.
-     *
+     * On enable parking spot.
+     *Enable parking spot in the DB by the given inputs .
      * @param event the event
      */
     @FXML
@@ -247,7 +245,7 @@ public class ParkingLotWorkerEnteryController extends EmployeeBaseController {
 
     /**
      * On back.
-     *
+     *Sets the Previews scene
      * @param event the event
      */
     @FXML

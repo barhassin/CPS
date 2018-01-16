@@ -29,46 +29,35 @@ import javafx.scene.control.TextField;
 public class ReserveParkingSpotController extends EmployeeBaseController
 {
     
-    /** The car number. */
-    @FXML // fx:id="carNumber"
-    private TextField carNumber; // Value injected by FXMLLoader
+    @FXML 
+    private TextField carNumber;
     
-    /** The parking lot. */
-    @FXML // fx:id="parkingLot"
-    private TextField parkingLot; // Value injected by FXMLLoader
+    @FXML 
+    private TextField parkingLot; 
     
-    /** The arrival hour. */
-    @FXML // fx:id="arrivalHour"
-    private TextField arrivalHour; // Value injected by FXMLLoader
+    @FXML 
+    private TextField arrivalHour; 
     
-    /** The leaving hour. */
-    @FXML // fx:id="leavingHour"
-    private TextField leavingHour; // Value injected by FXMLLoader
+    @FXML 
+    private TextField leavingHour;
     
-    /** The customer id. */
-    @FXML // fx:id="customerId"
-    private TextField customerId; // Value injected by FXMLLoader
+    @FXML
+    private TextField customerId; 
     
-    /** The email. */
-    @FXML // fx:id="email"
-    private TextField email; // Value injected by FXMLLoader
+    @FXML 
+    private TextField email; 
     
-    /** The arrival date. */
-    @FXML // fx:id="arrivalDate"
-    private DatePicker arrivalDate; // Value injected by FXMLLoader
+    @FXML
+    private DatePicker arrivalDate;
     
-    /** The leaving date. */
-    @FXML // fx:id="leavingDate"
-    private DatePicker leavingDate; // Value injected by FXMLLoader
+    @FXML
+    private DatePicker leavingDate; 
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The reservation. */
     Reservation reservation;
     
-    /** The customer. */
     Customer customer;
     
     /**
@@ -85,7 +74,7 @@ public class ReserveParkingSpotController extends EmployeeBaseController
     
     /**
      * On submit.
-     *
+     *Sends the reservation to the DB
      * @param event the event
      */
     @FXML
@@ -117,7 +106,7 @@ public class ReserveParkingSpotController extends EmployeeBaseController
     
     /**
      * On back.
-     *
+     *Sets the Previews scene
      * @param event the event
      */
     @FXML

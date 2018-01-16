@@ -26,23 +26,18 @@ import javafx.scene.control.ProgressBar;
 public class ComplaintsController extends BaseController
 {
     
-    /** The complaint deatils. */
     @FXML
     private TextArea complaintDeatils;
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The member ID. */
     @FXML
     private TextField memberID;
     
-    /** The prg bar. */
     @FXML
     private ProgressBar prgBar;
     
-    /** The complaint. */
     Complaint complaint;
     
     /**

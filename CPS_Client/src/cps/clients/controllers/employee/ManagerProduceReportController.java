@@ -18,7 +18,7 @@ public class ManagerProduceReportController  extends EmployeeBaseController {
 
     /**
      * On back.
-     *
+     *Sets the Previews scene
      * @param event the event
      */
     @FXML
@@ -29,7 +29,7 @@ public class ManagerProduceReportController  extends EmployeeBaseController {
 
     /**
      * On reservation report.
-     *
+     *Sets the scene which provides the reservation report.
      * @param event the event
      */
     @FXML
@@ -40,8 +40,8 @@ public class ManagerProduceReportController  extends EmployeeBaseController {
     }
 
     /**
-     * On comaplaints report.
-     *
+     * On complaints report.
+     *Gets the information from the DB that relevant to the Complaints report and displays it.
      * @param event the event
      */
     @FXML
@@ -55,7 +55,7 @@ public class ManagerProduceReportController  extends EmployeeBaseController {
 
     /**
      * On disabled parking spot report.
-     *
+     *Gets the information from the DB that relevant to the disabled parking spot report and displays it.
      * @param event the event
      */
     @FXML

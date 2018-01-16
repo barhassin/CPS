@@ -29,24 +29,20 @@ import javafx.scene.control.ProgressBar;
 public class MonitorAndControllNotMemberController extends BaseController
 {
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The Order ID. */
-    @FXML // fx:id="Order_ID"
-    private TextField Order_ID; // Value injected by FXMLLoader
+    @FXML
+    private TextField Order_ID; 
     
-    /** The Text order deatiles. */
-    @FXML // fx:id="TextOrderDeatiles"
-    private TextArea TextOrderDeatiles; // Value injected by FXMLLoader
+    @FXML 
+    private TextArea TextOrderDeatiles;
     
-    /** The prg bar. */
     @FXML
     private ProgressBar prgBar;
     
     /**
-     * On submit.
+     * Client clicks on back button.
      *
      * @param event the event
      */
@@ -91,7 +87,7 @@ public class MonitorAndControllNotMemberController extends BaseController
     }
     
     /**
-     * On back.
+     * Client clicks on back button.
      *
      * @param event the event
      */

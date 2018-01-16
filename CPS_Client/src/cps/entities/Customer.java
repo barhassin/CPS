@@ -10,30 +10,27 @@ import java.util.ArrayList;
 public class Customer implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The id. */
     private String id;
     
-    /** The email. */
     private String email;
     
-    /** The balance. */
     private float balance;
     
-    /** The reservations. */
     private ArrayList<String> reservations;
     
-    /** The subscriptions. */
     private ArrayList<String> subscriptions;
     
     /**
      * Instantiates a new customer.
      *
-     * @param id the id
-     * @param email the email
-     * @param balance the balance
+     * @param id
+     *            the id
+     * @param email
+     *            the email
+     * @param balance
+     *            the balance
      */
     public Customer(String id, String email, float balance)
     {
@@ -95,7 +92,8 @@ public class Customer implements Serializable
     /**
      * Sets the subscriptions.
      *
-     * @param subscriptions the new subscriptions
+     * @param subscriptions
+     *            the new subscriptions
      */
     public void setSubscriptions(ArrayList<String> subscriptions)
     {
@@ -105,14 +103,17 @@ public class Customer implements Serializable
     /**
      * Sets the reservations.
      *
-     * @param reservations the new reservations
+     * @param reservations
+     *            the new reservations
      */
     public void setReservations(ArrayList<String> reservations)
     {
 	this.reservations = reservations;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

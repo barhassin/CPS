@@ -9,27 +9,25 @@ import java.io.Serializable;
 public class ChangeRatesRequest implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The request id. */
+    
     private String requestId;
     
-    /** The parkinglot name. */
     private String parkinglotName;
     
-    /** The new guest rate. */
     private float newGuestRate;
     
-    /** The new in advance rate. */
     private float newInAdvanceRate;
     
     /**
      * Instantiates a new change rates request.
      *
-     * @param parkinglotName the parkinglot name
-     * @param newGuestRate the new guest rate
-     * @param newInAdvanceRate the new in advance rate
+     * @param parkinglotName
+     *            the parkinglot name
+     * @param newGuestRate
+     *            the new guest rate
+     * @param newInAdvanceRate
+     *            the new in advance rate
      */
     public ChangeRatesRequest(String parkinglotName, float newGuestRate, float newInAdvanceRate)
     {
@@ -40,7 +38,9 @@ public class ChangeRatesRequest implements Serializable
 	this.requestId = "Not yet initialized";
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -93,7 +93,8 @@ public class ChangeRatesRequest implements Serializable
     /**
      * Sets the request id.
      *
-     * @param requestId the new request id
+     * @param requestId
+     *            the new request id
      */
     public void setRequestId(String requestId)
     {

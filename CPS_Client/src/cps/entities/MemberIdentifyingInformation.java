@@ -1,4 +1,4 @@
-package cps.utilities;
+package cps.entities;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -7,17 +7,17 @@ package cps.utilities;
 public class MemberIdentifyingInformation
 {
     
-    /** The car number. */
     private String carNumber;
     
-    /** The subscription id. */
     private String subscriptionId;
     
     /**
      * Instantiates a new member identifying information.
      *
-     * @param subscriptionId the subscription id
-     * @param carNumber the car number
+     * @param subscriptionId
+     *            the subscription id
+     * @param carNumber
+     *            the car number
      */
     public MemberIdentifyingInformation(String subscriptionId, String carNumber)
     {

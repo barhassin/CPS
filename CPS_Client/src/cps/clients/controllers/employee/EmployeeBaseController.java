@@ -17,7 +17,6 @@ import javafx.scene.control.Alert.AlertType;
 public class EmployeeBaseController extends BaseController
 {
     
-    /** The My employee. */
     protected static Employee MyEmployee;
     
     /**
@@ -30,9 +29,7 @@ public class EmployeeBaseController extends BaseController
 	return MyEmployee;
     }
     
-    /**
-     * Log out.
-     */
+    
     protected void LogOut()
     {
 	try

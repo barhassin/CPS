@@ -16,12 +16,13 @@ import cps.entities.FullMembership;
 // TODO: Auto-generated Javadoc
 /**
  * The Class InputValidator.
+ * This class is used to validate the client's inputs.
  */
 public class InputValidator
 {
     
     /**
-     * Car number.
+     * Validate Car number.
      *
      * @param carNumber the car number
      * @return true, if successful
@@ -36,7 +37,7 @@ public class InputValidator
     }
     
     /**
-     * Credit card number.
+     * Validate Credit card number.
      *
      * @param creditcard the creditcard
      * @return true, if successful
@@ -51,7 +52,7 @@ public class InputValidator
     }
     
     /**
-     * Ccv.
+     * Validate Ccv.
      *
      * @param ccv the ccv
      * @return true, if successful
@@ -63,7 +64,7 @@ public class InputValidator
     }
     
     /**
-     * Expiration date.
+     * Validate Expiration date.
      *
      * @param date the date
      * @return true, if successful
@@ -78,7 +79,7 @@ public class InputValidator
     }
     
     /**
-     * Starting date.
+     * Validate Starting date.
      *
      * @param startingDate the starting date
      * @return true, if successful
@@ -113,7 +114,7 @@ public class InputValidator
     }
     
     /**
-     * Email.
+     * Validate Email.
      *
      * @param email the email
      * @return true, if successful
@@ -128,7 +129,7 @@ public class InputValidator
     }
     
     /**
-     * Id.
+     * Validate Id.
      *
      * @param id the id
      * @return true, if successful
@@ -163,7 +164,7 @@ public class InputValidator
     }
     
     /**
-     * Check hour format.
+     * Validate hour format.
      *
      * @param hour the hour
      * @return true, if successful
@@ -203,7 +204,7 @@ public class InputValidator
     }
     
     /**
-     * Full membership.
+     * Validate Full membership class.
      *
      * @param fullMembership the full membership
      * @return true, if successful
@@ -219,7 +220,7 @@ public class InputValidator
     }
     
     /**
-     * Customer.
+     * Validate Customer class.
      *
      * @param customer the customer
      * @return true, if successful
@@ -234,7 +235,7 @@ public class InputValidator
     }
     
     /**
-     * Order in advance.
+     * Validate Order in advance class.
      *
      * @param carNumber the car number
      * @param arrivalDate the arrival date
@@ -257,9 +258,9 @@ public class InputValidator
     }
     
     /**
-     * Partial membership.
+     * Validate Partial membership class.
      *
-     * @param carlist the carlist
+     * @param carlist the car list
      * @param email the email
      * @param arrivalDate the arrival date
      * @return true, if successful
@@ -275,9 +276,9 @@ public class InputValidator
     }
     
     /**
-     * Check car list.
+     * Validate car list.
      *
-     * @param carlist the carlist
+     * @param carlist the car list
      * @return true, if successful
      */
     public static boolean CheckCarList(ArrayList<String> carlist)
@@ -292,7 +293,7 @@ public class InputValidator
     }
     
     /**
-     * Text is empty.
+     * Validate that Text isn't empty.
      *
      * @param text the text
      * @return true, if successful
@@ -305,9 +306,9 @@ public class InputValidator
     }
     
     /**
-     * Order id.
+     * Validate Order id.
      *
-     * @param orderid the orderid
+     * @param orderid the order id
      * @return true, if successful
      */
     public static boolean OrderId(String orderid)

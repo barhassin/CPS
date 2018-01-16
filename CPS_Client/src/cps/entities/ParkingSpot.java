@@ -9,24 +9,23 @@ import java.io.Serializable;
 public class ParkingSpot implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The width X. */
     private int width_X;
     
-    /** The height Y. */
     private int height_Y;
     
-    /** The depth Z. */
     private int depth_Z;
     
     /**
      * Instantiates a new parking spot.
      *
-     * @param width_X the width X
-     * @param height_Y the height Y
-     * @param depth_Z the depth Z
+     * @param width_X
+     *            the width X
+     * @param height_Y
+     *            the height Y
+     * @param depth_Z
+     *            the depth Z
      */
     public ParkingSpot(int width_X, int height_Y, int depth_Z)
     {
@@ -35,7 +34,9 @@ public class ParkingSpot implements Serializable
 	this.depth_Z = depth_Z;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -44,16 +45,17 @@ public class ParkingSpot implements Serializable
 	return width_X + "," + height_Y + "," + depth_Z;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj)
     {
-	if(!(obj instanceof ParkingSpot))
-	    return false;
+	if (!(obj instanceof ParkingSpot)) return false;
 	
-	ParkingSpot parkingSpot = (ParkingSpot)obj;
+	ParkingSpot parkingSpot = (ParkingSpot) obj;
 	
 	return (this.width_X == parkingSpot.getWidth_X() && this.height_Y == parkingSpot.getHeight_Y()
 		&& this.depth_Z == parkingSpot.getDepth_Z());
@@ -62,7 +64,8 @@ public class ParkingSpot implements Serializable
     /**
      * Parses the.
      *
-     * @param str the str
+     * @param str
+     *            the str
      * @return the parking spot
      */
     static public ParkingSpot Parse(String str)

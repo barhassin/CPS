@@ -12,48 +12,47 @@ import cps.entities.enums.LogedStatus;
 public class Employee implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** The employee id. */
     private String employeeId;
     
-    /** The first name. */
     private String firstName;
     
-    /** The last name. */
     private String lastName;
     
-    /** The email. */
     private String email;
     
-    /** The org affiliation. */
     private String orgAffiliation;
     
-    /** The username. */
     private String username;
     
-    /** The password. */
     private String password;
     
-    /** The employee type. */
     EmployeeType employeeType;
     
-    /** The loged status. */
     LogedStatus logedStatus;
     
     /**
      * Instantiates a new employee.
      *
-     * @param employeeId the employee id
-     * @param firstName the first name
-     * @param lastName the last name
-     * @param email the email
-     * @param orgAffiliation the org affiliation
-     * @param username the username
-     * @param password the password
-     * @param employeeType the employee type
-     * @param logedStatus the loged status
+     * @param employeeId
+     *            the employee id
+     * @param firstName
+     *            the first name
+     * @param lastName
+     *            the last name
+     * @param email
+     *            the email
+     * @param orgAffiliation
+     *            the org affiliation
+     * @param username
+     *            the username
+     * @param password
+     *            the password
+     * @param employeeType
+     *            the employee type
+     * @param logedStatus
+     *            the loged status
      */
     public Employee(String employeeId, String firstName, String lastName, String email, String orgAffiliation,
 	    String username, String password, EmployeeType employeeType, LogedStatus logedStatus)
@@ -160,7 +159,9 @@ public class Employee implements Serializable
 	return username;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

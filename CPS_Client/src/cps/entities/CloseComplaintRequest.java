@@ -9,20 +9,19 @@ import java.io.Serializable;
 public class CloseComplaintRequest implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The complaint id. */
+    
     private String complaintId;
     
-    /** The compensation. */
     private float compensation;
     
     /**
      * Instantiates a new close complaint request.
      *
-     * @param complaintId the complaint id
-     * @param compensation the compensation
+     * @param complaintId
+     *            the complaint id
+     * @param compensation
+     *            the compensation
      */
     public CloseComplaintRequest(String complaintId, float compensation)
     {
@@ -30,7 +29,9 @@ public class CloseComplaintRequest implements Serializable
 	this.compensation = compensation;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

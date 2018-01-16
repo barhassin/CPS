@@ -2,7 +2,7 @@ package cps.utilities;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ConstsWeb.
+ * The Class ConstsWeb. Consts for the web's controllers.
  */
 public class ConstsWeb {
 	

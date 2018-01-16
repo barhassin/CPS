@@ -29,25 +29,21 @@ import javafx.scene.control.PasswordField;
 public class EmployeesLoginController extends EmployeeBaseController
 {
     
-    /** The password. */
     @FXML
     private PasswordField password;
     
-    /** The user name. */
     @FXML
     private TextField userName;
     
-    /** The login. */
     @FXML
     private Button login;
     
-    /** The prg bar. */
     @FXML
     private ProgressIndicator prgBar;
     
     /**
      * On login.
-     *
+     *Logins to the employee account if he isn't already logged in.
      * @param event the event
      * @throws InterruptedException the interrupted exception
      * @throws ExecutionException the execution exception

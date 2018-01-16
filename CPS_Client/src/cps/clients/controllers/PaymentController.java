@@ -22,31 +22,24 @@ import javafx.scene.control.TextField;
 public class PaymentController extends BaseController
 {
     
-    /** The three secret numbers. */
     @FXML
     private TextField threeSecretNumbers;
     
-    /** The order details. */
     @FXML
     private TextArea orderDetails;
     
-    /** The credit card. */
     @FXML
     private TextField creditCard;
     
-    /** The payment amount. */
     @FXML
     private Label paymentAmount;
     
-    /** The expiration date. */
     @FXML
     private TextField expirationDate;
     
-    /** The prg bar. */
     @FXML
     private ProgressBar prgBar;
     
-    /** The after payment details check. */
     private Consumer<Void> afterPaymentDetailsCheck;
     
     /**
@@ -90,7 +83,7 @@ public class PaymentController extends BaseController
     }
     
     /**
-     * On back.
+     * Client clicks on back button.
      *
      * @param event the event
      */
@@ -101,7 +94,7 @@ public class PaymentController extends BaseController
     }
     
     /**
-     * On submit.
+     *Client clicks on submit button.
      *
      * @param event the event
      */

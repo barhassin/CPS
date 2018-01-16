@@ -9,20 +9,19 @@ import java.io.Serializable;
 public class RemoveCarRequest implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The parkinglot. */
+    
     private String parkinglot;
     
-    /** The car number. */
     private String carNumber;
     
     /**
      * Instantiates a new removes the car request.
      *
-     * @param parkinglot the parkinglot
-     * @param carNumber the car number
+     * @param parkinglot
+     *            the parkinglot
+     * @param carNumber
+     *            the car number
      */
     public RemoveCarRequest(String parkinglot, String carNumber)
     {
@@ -30,7 +29,9 @@ public class RemoveCarRequest implements Serializable
 	this.carNumber = carNumber;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

@@ -60,12 +60,14 @@ import cps.utilities.CPS_Tracer;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ServerRequestHandler.
+ * The Class ServerRequestHandler. Handle a single sockets in parallel.
  */
 public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 {
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.io.Closeable#close()
      */
     @Override
@@ -81,16 +83,15 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	
     }
     
-    /** The my sql connection. */
     Connection mySqlConnection;
     
-    /** The my robot. */
     CPSRobot myRobot;
     
     /**
      * Instantiates a new server request handler.
      *
-     * @throws Exception the exception
+     * @throws Exception
+     *             the exception
      */
     public ServerRequestHandler() throws Exception
     {
@@ -112,9 +113,11 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
     }
     
     /**
-     * Handle request async.
+     * Handle request async. Instantiate a ServerRequestHandler and Handle the
+     * request with a new thread.
      *
-     * @param socket the socket
+     * @param socket
+     *            the socket
      */
     public static void HandleRequestAsync(Socket socket)
     {
@@ -139,12 +142,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	});
     }
     
-    /**
-     * Extract and apply request.
-     *
-     * @param clientRequest the client request
-     * @return the object
-     */
     private Object ExtractAndApplyRequest(ClientRequest clientRequest)
     {
 	switch (clientRequest.getServerDestination())
@@ -180,7 +177,7 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	    return AddParkinglot((Parkinglot) clientRequest.GetSentObject());
 	
 	case ClientServerConsts.GetAllParkinglots:
-	    return GetAllParkinglots();
+	    return GetAllParkinglots((boolean) clientRequest.GetSentObject());
 	
 	case ClientServerConsts.AddComplaint:
 	    return AddComplaint((Complaint) clientRequest.GetSentObject());
@@ -262,15 +259,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Checks if is date times over lap.
-     *
-     * @param start1 the start 1
-     * @param end1 the end 1
-     * @param start2 the start 2
-     * @param end2 the end 2
-     * @return true, if successful
-     */
     private boolean IsDateTimesOverLap(LocalDateTime start1, LocalDateTime end1, LocalDateTime start2,
 	    LocalDateTime end2)
     {
@@ -283,25 +271,11 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	
     }
     
-    /**
-     * Convert to car list.
-     *
-     * @param carListString the car list string
-     * @return the array list
-     */
     private ArrayList<String> ConvertToCarList(String carListString)
     {
 	return new ArrayList<>(Arrays.asList(carListString.split(" ,")));
     }
     
-    /**
-     * Generate unique id.
-     *
-     * @param preparedStatementString the prepared statement string
-     * @param offset the offset
-     * @return the string
-     * @throws Exception the exception
-     */
     private String GenerateUniqueId(String preparedStatementString, int offset) throws Exception
     {
 	boolean uniqueIdFound = false;
@@ -334,13 +308,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return uniqueId;
     }
     
-    /**
-     * Adds the row to table.
-     *
-     * @param preparedStatementString the prepared statement string
-     * @param values the values
-     * @throws Exception the exception
-     */
     private void AddRowToTable(String preparedStatementString, ArrayList<String> values) throws Exception
     {
 	try (PreparedStatement preparedStatement = mySqlConnection.prepareStatement(preparedStatementString))
@@ -360,13 +327,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the result set size.
-     *
-     * @param resultSet the result set
-     * @return the int
-     * @throws SQLException the SQL exception
-     */
     private int GetResultSetSize(ResultSet resultSet) throws SQLException
     {
 	int size = 0;
@@ -378,15 +338,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return size;
     }
     
-    /**
-     * Checks if is parking spot free.
-     *
-     * @param parkinglot the parkinglot
-     * @param fromDateTime the from date time
-     * @param toDateTime the to date time
-     * @return true, if successful
-     * @throws Exception the exception
-     */
     private boolean IsParkingSpotFree(String parkinglot, LocalDateTime fromDateTime, LocalDateTime toDateTime)
 	    throws Exception
     {
@@ -560,12 +511,9 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Update reservations status.
-     */
     void UpdateReservationsStatus()
     {
-	CPS_Tracer.TraceInformation("Trying to update reservations ");
+	CPS_Tracer.TraceInformation("Trying to update reservations and send reminders");
 	
 	try
 	{
@@ -590,26 +538,72 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 			
 			resultSet.updateString(10, ReservationStatus.NotFullfilled.toString());
 			resultSet.updateRow();
-			
+		    }
+		    
+		    LocalDateTime starTime = LocalDateTime.of(LocalDate.parse(resultSet.getString(6)),
+			    LocalTime.parse(resultSet.getString(8)));
+		    
+		    if (LocalDateTime.now().isAfter(starTime.plusMinutes(30)))
+		    {
+			CPS_Tracer.TraceInformation("Sent a reminder to reservation num " + resultSet.getString(1));
 		    }
 		}
 	    }
 	    
-	    CPS_Tracer.TraceInformation("Finished reservations's update  ");
+	    CPS_Tracer.TraceInformation("Finished update and send reminders to reservations");
 	    
 	}
 	catch (Exception e)
 	{
-	    CPS_Tracer.TraceError("Failed to update reservations");
+	    CPS_Tracer.TraceError("Failed to update reservations and reminders", e);
 	}
     }
     
-    /**
-     * Logout user.
-     *
-     * @param username the username
-     * @return the server response
-     */
+    void EmailMemberships()
+    {
+	CPS_Tracer.TraceInformation("Trying to send reminder email to memberships ");
+	
+	try
+	{
+	    String preparedStatementString = "SELECT * FROM FullMemberships";
+	    
+	    PreparedStatement preparedStatement = mySqlConnection.prepareStatement(preparedStatementString,
+		    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	    
+	    ResultSet resultSet = preparedStatement.executeQuery();
+	    
+	    while (resultSet.next())
+	    {
+		if (LocalDate.now().plusDays(7).equals(LocalDate.parse(resultSet.getString(4))))
+		{
+		    CPS_Tracer.TraceInformation("Emailed member " + resultSet.getString(1));
+		}
+	    }
+	    
+	    preparedStatementString = "SELECT * FROM PartialMemberships";
+	    
+	    preparedStatement = mySqlConnection.prepareStatement(preparedStatementString,
+		    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	    
+	    resultSet = preparedStatement.executeQuery();
+	    
+	    while (resultSet.next())
+	    {
+		if (LocalDate.now().plusDays(7).equals(LocalDate.parse(resultSet.getString(4))))
+		{
+		    CPS_Tracer.TraceInformation("Emailed member " + resultSet.getString(1));
+		}
+	    }
+	    
+	    CPS_Tracer.TraceInformation("Finished email memberships");
+	    
+	}
+	catch (Exception e)
+	{
+	    CPS_Tracer.TraceError("Failed to email memberships", e);
+	}
+    }
+    
     private ServerResponse<String> LogoutUser(String username)
     {
 	CPS_Tracer.TraceInformation("Trying to logout " + username);
@@ -617,12 +611,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return ChangeLogedStatus(username, false);
     }
     
-    /**
-     * Login user.
-     *
-     * @param username the username
-     * @return the server response
-     */
     private ServerResponse<String> LoginUser(String username)
     {
 	CPS_Tracer.TraceInformation("Trying to login " + username);
@@ -630,13 +618,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return ChangeLogedStatus(username, true);
     }
     
-    /**
-     * Change loged status.
-     *
-     * @param username the username
-     * @param login the login
-     * @return the server response
-     */
     private ServerResponse<String> ChangeLogedStatus(String username, boolean login)
     {
 	try
@@ -686,12 +667,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Close complaint.
-     *
-     * @param closeComplaintRequest the close complaint request
-     * @return the server response
-     */
     private ServerResponse<CloseComplaintRequest> CloseComplaint(CloseComplaintRequest closeComplaintRequest)
     {
 	CPS_Tracer.TraceInformation("Trying to close complaint: \n" + closeComplaintRequest.getComplaintId());
@@ -756,12 +731,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Adds the complaint.
-     *
-     * @param complaint the complaint
-     * @return the server response
-     */
     private ServerResponse<Complaint> AddComplaint(Complaint complaint)
     {
 	CPS_Tracer.TraceInformation("Trying to add complaint: \n" + complaint);
@@ -819,12 +788,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Close change rates request.
-     *
-     * @param changeRatesResponse the change rates response
-     * @return the server response
-     */
     private ServerResponse<ChangeRatesResponse> CloseChangeRatesRequest(ChangeRatesResponse changeRatesResponse)
     {
 	CPS_Tracer.TraceInformation("Trying to close ChangeRatesRequest: \n" + changeRatesResponse);
@@ -892,12 +855,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Adds the change rates request.
-     *
-     * @param changeRatesRequest the change rates request
-     * @return the server response
-     */
     private ServerResponse<ChangeRatesRequest> AddChangeRatesRequest(ChangeRatesRequest changeRatesRequest)
     {
 	CPS_Tracer.TraceInformation("Trying to add ChangeRatesRequest: \n" + changeRatesRequest);
@@ -956,11 +913,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the all change rates requests.
-     *
-     * @return the server response
-     */
     private ServerResponse<ArrayList<ChangeRatesRequest>> GetAllChangeRatesRequests()
     {
 	CPS_Tracer.TraceInformation("Trying to get all ChangeRatesRequests.");
@@ -1000,18 +952,38 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Register full membership.
-     *
-     * @param fullMembership the full membership
-     * @return the server response
-     */
     private ServerResponse<FullMembership> RegisterFullMembership(FullMembership fullMembership)
     {
 	CPS_Tracer.TraceInformation("Registering full membership: \n" + fullMembership);
 	
 	try
 	{
+	    // Check if the car is not singed already:
+	    
+	    PreparedStatement preparedStatement = mySqlConnection.prepareStatement(
+		    "SELECT * FROM FullMemberships WHERE  carNumber = ? ");
+	    
+	    preparedStatement.setString(1, fullMembership.GetCarNumber());
+	    
+	    ResultSet resultSet = preparedStatement.executeQuery();
+	    
+	    while (resultSet.next())
+	    {
+		LocalDate expiryDateTime = LocalDate.parse(resultSet.getString(4));
+		
+		if (expiryDateTime.isAfter(LocalDate.now()))
+		{
+		    ServerResponse<FullMembership> serverResponse = new ServerResponse<>(RequestResult.AlredyExist, fullMembership,
+			    "car exists");
+		    
+		    CPS_Tracer.TraceInformation("Server response to client after register: \n" + serverResponse);
+		    
+		    return serverResponse;
+		}
+	    }
+	    
+	    // Register:
+	    
 	    String preparedStatementString = "INSERT INTO FullMemberships(subscriptionId, customerId, startDate, expiryDate, carNumber) VALUES(?, ?, ?, ?, ?)";
 	    
 	    ArrayList<String> values = new ArrayList<>();
@@ -1047,12 +1019,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Change expire full membership.
-     *
-     * @param fullMembership the full membership
-     * @return the server response
-     */
     private ServerResponse<FullMembership> ChangeExpireFullMembership(FullMembership fullMembership)
     {
 	
@@ -1099,12 +1065,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Change expire partial membership.
-     *
-     * @param partialMembership the partial membership
-     * @return the server response
-     */
     private ServerResponse<PartialMembership> ChangeExpirePartialMembership(PartialMembership partialMembership)
     {
 	CPS_Tracer.TraceInformation("Change expiry Date partial membership: \n" + partialMembership);
@@ -1150,12 +1110,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Register partial membership.
-     *
-     * @param partialMembership the partial membership
-     * @return the server response
-     */
     private ServerResponse<PartialMembership> RegisterPartialMembership(PartialMembership partialMembership)
     {
 	CPS_Tracer.TraceInformation("Registering partial membership: \n" + partialMembership);
@@ -1163,6 +1117,33 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	try
 	{
 	    ServerResponse<PartialMembership> serverResponse;
+	    
+	    // Check if he is not registered already
+	    
+	    for (String carString : partialMembership.GetCarList())
+	    {
+		PreparedStatement preparedStatement = mySqlConnection.prepareStatement(
+			"SELECT * FROM PartialMemberships WHERE parkinglot = ? AND carList LIKE '%" + carString + "%'");
+		
+		preparedStatement.setString(1, partialMembership.GetParkinglot());
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		while (resultSet.next())
+		{
+		    LocalDate expiryDateTime = LocalDate.parse(resultSet.getString(4));
+		    
+		    if (expiryDateTime.isAfter(LocalDate.now()))
+		    {
+			serverResponse = new ServerResponse<PartialMembership>(RequestResult.AlredyExist,
+				partialMembership, "car exists");
+			
+			CPS_Tracer.TraceInformation("Server response to client after register: \n" + serverResponse);
+			
+			return serverResponse;
+		    }
+		}
+	    }
 	    
 	    // Check if we have space for him:
 	    
@@ -1232,12 +1213,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Reservation.
-     *
-     * @param reservation the reservation
-     * @return the server response
-     */
     private ServerResponse<Reservation> Reservation(Reservation reservation)
     {
 	CPS_Tracer.TraceInformation("Adding Reservation: \n" + reservation);
@@ -1298,12 +1273,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Adds the parkinglot.
-     *
-     * @param parkinglot the parkinglot
-     * @return the server response
-     */
     private ServerResponse<Parkinglot> AddParkinglot(Parkinglot parkinglot)
     {
 	CPS_Tracer.TraceInformation("Adding Parkinglot: \n" + parkinglot);
@@ -1340,12 +1309,7 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the all parkinglots.
-     *
-     * @return the server response
-     */
-    private ServerResponse<ArrayList<Parkinglot>> GetAllParkinglots()
+    private ServerResponse<ArrayList<Parkinglot>> GetAllParkinglots(boolean onlyNotFull)
     {
 	CPS_Tracer.TraceInformation("Trying to get all parkinglots.");
 	
@@ -1366,8 +1330,20 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 		parkinglots.add(parkinglot);
 	    }
 	    
+	    if (onlyNotFull)
+	    {
+		for (Parkinglot p : parkinglots)
+		{
+		    if (!IsParkingSpotFree(p.getParkinglotName(), LocalDateTime.now(),
+			    LocalDateTime.now().plusHours(2)))
+		    {
+			parkinglots.remove(p);
+		    }
+		}
+	    }
+	    
 	    serverResponse = new ServerResponse<>(RequestResult.Succeed, parkinglots,
-		    "Found " + parkinglots.size() + " parkinglots.");
+		    "Found " + parkinglots.size() + "suitable parkinglots.");
 	    
 	    CPS_Tracer.TraceInformation(
 		    "Server response to client after trying to get all parkinglots: \n" + serverResponse);
@@ -1382,11 +1358,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the all active complaints.
-     *
-     * @return the server response
-     */
     private ServerResponse<ArrayList<Complaint>> GetAllActiveComplaints()
     {
 	CPS_Tracer.TraceInformation("Trying to get all active complaints.");
@@ -1428,12 +1399,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Adds the customer if not exists.
-     *
-     * @param customer the customer
-     * @return the server response
-     */
     private ServerResponse<Customer> AddCustomerIfNotExists(Customer customer)
     {
 	CPS_Tracer.TraceInformation("Trying to add customer: \n" + customer);
@@ -1490,12 +1455,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the full membership.
-     *
-     * @param subscriptionId the subscription id
-     * @return the server response
-     */
     private ServerResponse<FullMembership> GetFullMembership(String subscriptionId)
     {
 	CPS_Tracer.TraceInformation("Get full membership: \n" + subscriptionId);
@@ -1540,12 +1499,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the partial membership.
-     *
-     * @param subscriptionId the subscription id
-     * @return the server response
-     */
     private ServerResponse<PartialMembership> GetPartialMembership(String subscriptionId)
     {
 	CPS_Tracer.TraceInformation("Get partial membership: \n" + subscriptionId);
@@ -1592,12 +1545,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the customer.
-     *
-     * @param customerId the customer id
-     * @return the server response
-     */
     private ServerResponse<Customer> GetCustomer(String customerId)
     {
 	CPS_Tracer.TraceInformation("Get customer: \n" + customerId);
@@ -1686,12 +1633,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the reservation.
-     *
-     * @param orderId the order id
-     * @return the server response
-     */
     private ServerResponse<Reservation> GetReservation(String orderId)
     {
 	CPS_Tracer.TraceInformation("Get Reservation with Id:" + orderId);
@@ -1739,12 +1680,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the employee.
-     *
-     * @param loginIdentification the login identification
-     * @return the server response
-     */
     private ServerResponse<Employee> GetEmployee(LoginIdentification loginIdentification)
     {
 	CPS_Tracer.TraceInformation("Trying to get Employee with username:" + loginIdentification.getUsername());
@@ -1793,12 +1728,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the parkinglot.
-     *
-     * @param parkinglotName the parkinglot name
-     * @return the server response
-     */
     ServerResponse<Parkinglot> GetParkinglot(String parkinglotName)
     {
 	CPS_Tracer.TraceInformation("Trying to get Parkinglot: " + parkinglotName);
@@ -1841,12 +1770,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Change parkinglot status.
-     *
-     * @param changeParkinglotStatusRequest the change parkinglot status request
-     * @return the server response
-     */
     private ServerResponse<ChangeParkinglotStatusRequest> ChangeParkinglotStatus(
 	    ChangeParkinglotStatusRequest changeParkinglotStatusRequest)
     {
@@ -1890,12 +1813,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Change parking spot status.
-     *
-     * @param changeParkingSpotStatusRequest the change parking spot status request
-     * @return the server response
-     */
     private ServerResponse<ChangeParkingSpotStatusRequest> ChangeParkingSpotStatus(
 	    ChangeParkingSpotStatusRequest changeParkingSpotStatusRequest)
     {
@@ -1989,11 +1906,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the all disabled parking spots.
-     *
-     * @return the server response
-     */
     private ServerResponse<ArrayList<ParkingSpot>> GetAllDisabledParkingSpots()
     {
 	CPS_Tracer.TraceInformation("Trying to get all disabled parking spots.");
@@ -2032,12 +1944,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Try insert car.
-     *
-     * @param request the request
-     * @return the server response
-     */
     private ServerResponse<AddRealTimeParkingRequest> TryInsertCar(AddRealTimeParkingRequest request)
     {
 	CPS_Tracer.TraceInformation("Trying to insert guest car: \n" + request);
@@ -2060,7 +1966,7 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	    {
 		serverResponse = new ServerResponse<>(RequestResult.AlredyExist, request, null);
 	    }
-	    // Check if there is a free parking spot:
+	    
 	    else if (request.getIsGuestRequest() && !IsParkingSpotFree(request.getParkinglot(),
 		    request.getStartDateTime(), request.getExiDateTime()))
 	    {
@@ -2127,12 +2033,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Removes the car.
-     *
-     * @param request the request
-     * @return the server response
-     */
     private ServerResponse<RemoveCarRequest> RemoveCar(RemoveCarRequest request)
     {
 	CPS_Tracer.TraceInformation("Trying to remove a car: \n" + request);
@@ -2183,11 +2083,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the performance report.
-     *
-     * @return the server response
-     */
     private ServerResponse<PerformanceReport> GetPerformanceReport()
     {
 	CPS_Tracer.TraceInformation("Trying to get performance report.");
@@ -2240,11 +2135,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the complaints report.
-     *
-     * @return the server response
-     */
     private ServerResponse<ComplaintsReport> GetComplaintsReport()
     {
 	CPS_Tracer.TraceInformation("Trying to get complaints report.");
@@ -2296,12 +2186,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the reservation report.
-     *
-     * @param parkingLot the parking lot
-     * @return the server response
-     */
     private ServerResponse<ReservationReport> GetReservationReport(String parkingLot)
     {
 	CPS_Tracer.TraceInformation("Trying to get reservation report.");
@@ -2421,12 +2305,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Credit customer.
-     *
-     * @param request the request
-     * @return the server response
-     */
     private ServerResponse<CreditCustomerRequest> CreditCustomer(CreditCustomerRequest request)
     {
 	CPS_Tracer.TraceInformation("Trying to credit customer: " + request);
@@ -2470,12 +2348,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Close reservation.
-     *
-     * @param reservationId the reservation id
-     * @return the server response
-     */
     private ServerResponse<String> CloseReservation(String reservationId)
     {
 	CPS_Tracer.TraceInformation("Trying to close reservation: " + reservationId);
@@ -2519,12 +2391,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the disabled report.
-     *
-     * @param parkingLot the parking lot
-     * @return the server response
-     */
     private ServerResponse<DisabledReport> GetDisabledReport(String parkingLot)
     {
 	CPS_Tracer.TraceInformation("Trying to get disabled report.");
@@ -2621,12 +2487,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the activity report.
-     *
-     * @param localDate the local date
-     * @return the server response
-     */
     private ServerResponse<ActivityReport> GetActivityReport(LocalDate localDate)
     {
 	CPS_Tracer.TraceInformation("Trying to get activity report.");
@@ -2824,11 +2684,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Gets the status report.
-     *
-     * @return the server response
-     */
     private ServerResponse<StatusReport> GetStatusReport()
     {
 	CPS_Tracer.TraceInformation("Trying to get status report.");
@@ -2916,12 +2771,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	}
     }
     
-    /**
-     * Median.
-     *
-     * @param arr the arr
-     * @return the float
-     */
     float median(Integer[] arr)
     {
 	if (arr.length % 2 == 0)
@@ -2930,12 +2779,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	    return (float) arr[arr.length / 2];
     }
     
-    /**
-     * Median.
-     *
-     * @param arr the arr
-     * @return the float
-     */
     float median(Float[] arr)
     {
 	if (arr.length % 2 == 0)
@@ -2944,12 +2787,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	    return (float) arr[arr.length / 2];
     }
     
-    /**
-     * Sum.
-     *
-     * @param arr the arr
-     * @return the int
-     */
     int sum(Integer[] arr)
     {
 	int tempSum = 0;
@@ -2960,12 +2797,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return tempSum;
     }
     
-    /**
-     * Sum.
-     *
-     * @param arr the arr
-     * @return the float
-     */
     float sum(Float[] arr)
     {
 	int tempSum = 0;
@@ -2976,13 +2807,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return tempSum;
     }
     
-    /**
-     * Sd.
-     *
-     * @param arr the arr
-     * @param mean the mean
-     * @return the float
-     */
     float sd(Integer[] arr, float mean)
     {
 	double sum = 0;
@@ -2993,13 +2817,6 @@ public class ServerRequestHandler implements Closeable// pLw9Zaqp{ey`2,Ve
 	return (float) Math.sqrt(sum / arr.length);
     }
     
-    /**
-     * Sd.
-     *
-     * @param arr the arr
-     * @param mean the mean
-     * @return the float
-     */
     float sd(Float[] arr, float mean)
     {
 	double sum = 0;

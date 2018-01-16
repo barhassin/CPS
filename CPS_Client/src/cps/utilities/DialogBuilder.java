@@ -18,19 +18,13 @@ import javafx.scene.layout.GridPane;
 // TODO: Auto-generated Javadoc
 /**
  * The Class DialogBuilder.
+ * This is a helper class for dialogs.
  */
 public class DialogBuilder
 {
     
-    /** The password. */
     PasswordField password = new PasswordField();
     
-    /**
-     * Text extractor.
-     *
-     * @param textList the text list
-     * @return the list
-     */
     private static List<String> TextExtractor(List<TextField> textList)
     {
 	List<String> extractedList = new ArrayList<>();
@@ -44,7 +38,7 @@ public class DialogBuilder
     }
     
     /**
-     * Inputs dialog.
+     * Creates an Inputs dialog.
      *
      * @param dialogTitle the dialog title
      * @param inputLabels the input labels
@@ -94,7 +88,7 @@ public class DialogBuilder
     }
     
     /**
-     * Alert dialog.
+     * Creates an Alert dialog.
      *
      * @param alertType the alert type
      * @param title the title

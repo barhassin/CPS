@@ -7,17 +7,17 @@ package cps.entities;
 public class GuestIdentifyingInformation
 {
     
-    /** The car number. */
     private String carNumber;
     
-    /** The order id. */
     private String orderId;
     
     /**
      * Instantiates a new guest identifying information.
      *
-     * @param orderId the order id
-     * @param carNumber the car number
+     * @param orderId
+     *            the order id
+     * @param carNumber
+     *            the car number
      */
     public GuestIdentifyingInformation(String orderId, String carNumber)
     {

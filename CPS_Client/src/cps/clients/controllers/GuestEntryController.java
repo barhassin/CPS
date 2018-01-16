@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import cps.clientServer.RequestResult;
@@ -25,6 +26,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
@@ -36,40 +38,38 @@ import javafx.scene.control.TextField;
 public class GuestEntryController extends BaseController
 {
     
-    /** The car number. */
     @FXML
     private TextField carNumber;
     
-    /** The departure time. */
+    @FXML
+    private Button submit;
+    
     @FXML
     private TextField departureTime;
     
-    /** The Headline. */
     @FXML
     private Label Headline;
     
-    /** The id. */
     @FXML
     private TextField id;
     
-    /** The email. */
     @FXML
     private TextField email;
     
-    /** The prg bar. */
     @FXML
     private ProgressBar prgBar;
     
-    /** The parkinglot name. */
     private String parkinglotName;
     
-    /** The parkinglot. */
     private Parkinglot parkinglot;
+    
+    ArrayList<Parkinglot> freeParkinglots = null;
     
     /**
      * Instantiates a new guest entry controller.
      *
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public GuestEntryController() throws IOException
     {
@@ -83,9 +83,10 @@ public class GuestEntryController extends BaseController
     }
     
     /**
-     * On back.
+     * Client clicks on back button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnBack(ActionEvent event)
@@ -94,9 +95,10 @@ public class GuestEntryController extends BaseController
     }
     
     /**
-     * On submit.
+     * Client clicks on submit button.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     @FXML
     void OnSubmit(ActionEvent event)
@@ -112,59 +114,85 @@ public class GuestEntryController extends BaseController
 	
 	prgBar.setVisible(true);
 	
+	submit.setDisable(true);
+	
 	CompletableFuture.runAsync(() ->
 	{
-	    
-	    CompletableFuture.runAsync(() ->
+	    try
 	    {
-		RequestsSender.AddCustomerIfNotExists(customer);
-	    });
-	    
-	    AddRealTimeParkingRequest request = new AddRealTimeParkingRequest(parkinglotName, LocalDateTime.now(),
-		    LocalDateTime.of(LocalDate.now(), LocalTime.parse(departureTime.getText())), carNumber.getText(),
-		    true);
-	    
-	    ServerResponse<AddRealTimeParkingRequest> insertCarResponse = RequestsSender.TryInsertCar(request);
-	    
-	    Platform.runLater(() ->
+		
+		CompletableFuture.runAsync(() ->
+		{
+		    RequestsSender.AddCustomerIfNotExists(customer);
+		});
+		
+		CompletableFuture<ArrayList<Parkinglot>> task = CompletableFuture.supplyAsync(() ->
+		{
+		    return RequestsSender.GetAllParkinglots(true).GetResponseObject();
+		});
+		
+		AddRealTimeParkingRequest request = new AddRealTimeParkingRequest(parkinglotName, LocalDateTime.now(),
+			LocalDateTime.of(LocalDate.now(), LocalTime.parse(departureTime.getText())),
+			carNumber.getText(), true);
+		
+		ServerResponse<AddRealTimeParkingRequest> insertCarResponse = RequestsSender.TryInsertCar(request);
+		
+		freeParkinglots = task.get();
+		
+		Platform.runLater(() ->
+		{
+		    prgBar.setVisible(false);
+		    
+		    submit.setDisable(false);
+		    
+		    if (insertCarResponse.GetRequestResult().equals(RequestResult.ResourceNotAvaillable))
+		    {
+			ArrayList<String> freeParkinglotsNames = new ArrayList<>();
+			
+			for (Parkinglot p : freeParkinglots)
+			{
+			    freeParkinglotsNames.add(p.getParkinglotName());
+			}
+			
+			DialogBuilder.AlertDialog(AlertType.ERROR, null,
+				"We are sorry, The parking lot is full.. \nWe have free spots in these parkinglots:\n"
+					+ freeParkinglotsNames,
+				null, false);
+		    }
+		    else if (insertCarResponse.GetRequestResult().equals(RequestResult.Succeed))
+		    {
+			float paymentAmount = LocalDateTime.now().until(
+				LocalDateTime.of(LocalDate.now(), LocalTime.parse(departureTime.getText())),
+				ChronoUnit.HOURS) * parkinglot.getGuestRate();
+			
+			String reservationId = RequestsSender.Reservation(new Reservation(ReservationType.Local,
+				id.getText(), parkinglotName, carNumber.getText(), LocalDate.now(), LocalDate.now(),
+				LocalTime.now(), LocalTime.parse(departureTime.getText()), ReservationStatus.Fullfilled,
+				paymentAmount)).GetResponseObject().getOrderId();
+			
+			DialogBuilder.AlertDialog(AlertType.INFORMATION, Consts.Approved,
+				Consts.LeaveTheCarMessage + "\nYour order id is: " + reservationId, null, false);
+			
+			myControllersManager.GoToHomePage(Consts.GuestEntry);
+		    }
+		    else if (insertCarResponse.GetRequestResult().equals(RequestResult.AlredyExist))
+		    {
+			DialogBuilder.AlertDialog(AlertType.ERROR, null, "Your car is already in the parking lot.",
+				null, false);
+			
+		    }
+		    else
+		    {
+			DialogBuilder.AlertDialog(AlertType.ERROR, null, Consts.ServerProblemMessage, null, false);
+			
+		    }
+		    
+		});
+	    }
+	    catch (Exception e)
 	    {
-		prgBar.setVisible(false);
-		
-		if (insertCarResponse.GetRequestResult().equals(RequestResult.ResourceNotAvaillable))
-		{
-		    DialogBuilder.AlertDialog(AlertType.ERROR, null, "We are sorry. \nThe parking lot is full..", null,
-			    false);
-		    
-		}
-		else if (insertCarResponse.GetRequestResult().equals(RequestResult.Succeed))
-		{
-		    float paymentAmount = LocalDateTime.now().until(
-			    LocalDateTime.of(LocalDate.now(), LocalTime.parse(departureTime.getText())),
-			    ChronoUnit.HOURS) * parkinglot.getGuestRate();
-		    
-		    String reservationId = RequestsSender.Reservation(new Reservation(ReservationType.Local,
-			    id.getText(), parkinglotName, carNumber.getText(), LocalDate.now(), LocalDate.now(),
-			    LocalTime.now(), LocalTime.parse(departureTime.getText()), ReservationStatus.Fullfilled,
-			    paymentAmount)).GetResponseObject().getOrderId();
-		    
-		    DialogBuilder.AlertDialog(AlertType.INFORMATION, Consts.Approved,
-			    Consts.LeaveTheCarMessage + "\nYour order id is: " + reservationId, null, false);
-		    
-		    myControllersManager.GoToHomePage(Consts.GuestEntry);
-		}
-		else if (insertCarResponse.GetRequestResult().equals(RequestResult.AlredyExist))
-		{
-		    DialogBuilder.AlertDialog(AlertType.ERROR, null, "Your car is already in the parking lot.", null,
-			    false);
-		    
-		}
-		else
-		{
-		    DialogBuilder.AlertDialog(AlertType.ERROR, null, Consts.ServerProblemMessage, null, false);
-		    
-		}
-		
-	    });
+		e.printStackTrace();
+	    }
 	    
 	});
 	

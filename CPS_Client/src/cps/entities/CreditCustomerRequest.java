@@ -9,20 +9,19 @@ import java.io.Serializable;
 public class CreditCustomerRequest implements Serializable
 {
     
-    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The credit. */
+    
     private float credit;
     
-    /** The customer id. */
     private String customerId;
     
     /**
      * Instantiates a new credit customer request.
      *
-     * @param customerId the customer id
-     * @param credit the credit
+     * @param customerId
+     *            the customer id
+     * @param credit
+     *            the credit
      */
     public CreditCustomerRequest(String customerId, float credit)
     {
@@ -50,7 +49,9 @@ public class CreditCustomerRequest implements Serializable
 	return customerId;
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

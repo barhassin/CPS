@@ -16,47 +16,29 @@ import cps.utilities.CPS_Tracer;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CPSRobot.
+ * The Class CPSRobot. Responsible on the parking spots
  */
 public class CPSRobot
 {
     
-    /** The connection. */
     private Connection connection;
     
-    /** The my server request handler. */
     private ServerRequestHandler myServerRequestHandler;
     
-    /**
-     * The Class WeightedRealTimeParking.
-     */
     @SuppressWarnings("unused")
     private class WeightedRealTimeParking
     {
 	
-	/** The start. */
 	LocalDateTime start;
 	
-	/** The end. */
 	LocalDateTime end;
 	
-	/** The parking spot. */
 	ParkingSpot parkingSpot;
 	
-	/** The car number. */
 	String carNumber;
 	
-	/** The weight. */
 	long weight;
 	
-	/**
-	 * Instantiates a new weighted real time parking.
-	 *
-	 * @param start the start
-	 * @param end the end
-	 * @param parkingSpot the parking spot
-	 * @param carNumber the car number
-	 */
 	WeightedRealTimeParking(LocalDateTime start, LocalDateTime end, ParkingSpot parkingSpot, String carNumber)
 	{
 	    this.start = start;
@@ -71,8 +53,10 @@ public class CPSRobot
     /**
      * Instantiates a new CPS robot.
      *
-     * @param connection the connection
-     * @param serverRequestHandler the server request handler
+     * @param connection
+     *            the connection
+     * @param serverRequestHandler
+     *            the server request handler
      */
     CPSRobot(Connection connection, ServerRequestHandler serverRequestHandler)
     {
@@ -83,8 +67,10 @@ public class CPSRobot
     /**
      * Orginize parking spots after add car.
      *
-     * @param request the request
-     * @throws SQLException the SQL exception
+     * @param request
+     *            the request
+     * @throws SQLException
+     *             the SQL exception
      */
     void OrginizeParkingSpotsAfterAddCar(AddRealTimeParkingRequest request) throws SQLException
     {
